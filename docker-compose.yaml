@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  goapi:
+    build:
+      context: ./
+    container_name: deck_toggl_api
+    environment:
+      DATABASE_URL: "postgres://toggl_deck:secretpassword@sqldb/toggl_deck?sslmode=disable"
+    ports:
+      - "8080:9999"
+    volumes:
+      - ./:/app
+    depends_on:
+      - newsqldb
+
+  newsqldb:
+    image: postgres:14.4-alpine
+    container_name: deck_toggl_postgres_db
+    environment:
+      POSTGRES_DB: toggl_deck
+      POSTGRES_USER: toggl_deck
+      POSTGRES_PASSWORD: secretpassword
+    volumes:
+      - newsqldb-data:/var/lib/postgresql/data:rw
+  #     - ./docker/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  toggl-adminer:
+    image: adminer:4.7.5
+    container_name: deck_toggl_adminer
+    ports:
+      - 1337:8080
+volumes:
+  newsqldb-data:
