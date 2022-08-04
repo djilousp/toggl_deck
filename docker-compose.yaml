@@ -6,7 +6,13 @@ services:
       context: ./
     container_name: deck_toggl_api
     environment:
-      DATABASE_URL: "postgres://toggl_deck:secretpassword@sqldb/toggl_deck?sslmode=disable"
+      #DATABASE_URL: "postgres://toggl_deck:secretpassword@newsqldb/toggl_deck?sslmode=disable"
+      DB_USER: "toggl_deck"
+      DB_PASSWORD: "secretpassword"
+      DB_NAME: "toggl_deck"
+      DB_PORT: "5432"
+      DB_HOST: "newsqldb"
+      DB_DRIVER: "postgres"
     ports:
       - "8080:9999"
     volumes:
@@ -23,7 +29,6 @@ services:
       POSTGRES_PASSWORD: secretpassword
     volumes:
       - newsqldb-data:/var/lib/postgresql/data:rw
-  #     - ./docker/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
   toggl-adminer:
     image: adminer:4.7.5

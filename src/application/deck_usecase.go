@@ -9,16 +9,16 @@ type DeckApplication struct {
 	deckRepository protocols.DeckRepository
 }
 
-
-
 func NewDeckApplication(repo protocols.DeckRepository) *DeckApplication {
-
 	return &DeckApplication{
 		deckRepository: repo,
 	}
 }
 
-func (da *DeckApplication) OpenDeck(deckId string) (*dtos.DeckOutPutDTO, error){
+func (da *DeckApplication) OpenDeck(deckId string) (*dtos.DeckOutPutDTO, error) {
 	deck, err := da.deckRepository.GetById(deckId)
-	return deck.ToOutPutDTO(), err
+	if err != nil {
+		return nil, err
+	}
+	return deck.ToOutPutDTO(), nil
 }

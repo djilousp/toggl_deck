@@ -1,6 +1,6 @@
 package domain
 
-type Cards struct {
+type Card struct {
 	ID    int64
 	Suit  string
 	Value string

@@ -1,17 +1,19 @@
 test:
 	docker-compose up -d 
-	docker exec -it deck_toggl_api go test ./tests...
+	docker exec -it deck_toggl_api ginkgo ./tests
 	docker container stop deck_toggl_api 
 	docker container rm deck_toggl_api 
 	docker-compose up -d
 
 build_up:
 	docker-compose up --build -d
+
 up:
 	docker-compose up -d
 
-restart:
+recreate:
 	docker-compose stop 
+	docker container rm deck_toggl_api
 	docker-compose up -d 
 
 prune_all:

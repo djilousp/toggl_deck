@@ -1,12 +1,11 @@
-# BUILD
-FROM golang:1.19-rc-bullseye as build
+FROM golang:latest as build
 
 RUN mkdir app
 WORKDIR /app
 COPY . .
-EXPOSE 9999
-#RUN apt update -yq
-#RUN apt install -y postgresql-client
 
-#RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /http-service .
+RUN go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo && go get github.com/onsi/gomega/...
+
+EXPOSE 9999
+
 CMD [ "go","run","main.go" ]
